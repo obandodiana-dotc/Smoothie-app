@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smoothie Shop 🛒</title>
+    <!-- Incluir Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Incluir Tailwind CSS para facilitar el diseño general y la estética -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* --- ESTILOS GENERALES Y TIPOGRAFÍA (CYBER-TECH DARK MODE) --- */
+        :root {
+            --bg-dark: #0A0A10; /* Fondo muy oscuro, casi negro */
+            --card-bg: #1C1C24; /* Fondo de tarjeta un poco más claro */
+            --primary-accent: #00FFC2; /* Neón Aqua/Cian para detalles primarios */
+            --primary-glow: 0 0 10px #00FFC280, 0 0 20px #00FFC240; /* Efecto de brillo (glow) primario */
+            --secondary-accent: #FFD700; /* Oro brillante para precios y destaque */
+            --secondary-glow: 0 0 8px #FFD70080;
+            --text-light: #E0E0FF; /* Texto casi blanco */
+            --text-muted: #8F8FA8; /* Texto sutil */
+            --border-color: #3F3F50; /* Borde sutil */
+            --error-color: #FF6B6B; /* Rojo de error con glow */
+            --glass-bg: rgba(30, 30, 45, 0.6); /* Fondo semi-transparente para Glassmorphism */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            margin: 0;
+            padding-bottom: 90px;
+            min-height: 100vh;
+            transition: background-color 0.5s;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            /* Borde inferior con efecto de neón */
+            border-bottom: 2px solid var(--primary-accent);
+            box-shadow: 0 3px 15px var(--primary-accent);
+            position: relative;
+        }
+
+        #language-toggle {
+            position: absolute;
+            top: 30px;
+            right: 0;
+            background-color: var(--card-bg);
+            color: var(--primary-accent);
+            border: 2px solid var(--primary-accent);
+            border-radius: 8px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 700;
+            transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s;
+            box-shadow: 0 0 5px var(--primary-accent);
+        }
+
+        #language-toggle:hover {
+            background-color: #00FFC220; /* Color primario semi-transparente */
+            transform: scale(1.05);
+            box-shadow: var(--primary-glow);
+        }
+
+        header h1 {
+            color: var(--primary-accent);
+            font-size: 3.5em;
+            font-weight: 900;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--primary-accent); /* Brillo neón */
+        }
+        
+        /* --- PRODUCT CARD INNOVATION (ACRYLIC/NEON) --- */
+        .smoothie-card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            /* Borde inicial sutil */
+            border: 1px solid var(--border-color);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .smoothie-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            /* Borde y sombra de neón más intensa al pasar el ratón */
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 25px rgba(0, 255, 194, 0.6);
+        }
+
+        .card-image-placeholder {
+            height: 150px;
+            width: 100%;
+            /* Degradado futurista */
+            background: linear-gradient(45deg, #0A0A10, #00FFC215, #0A0A10);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 5em;
+            color: var(--text-light);
+            border-bottom: 1px solid var(--primary-accent);
+        }
+        
+        .add-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: var(--primary-accent);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+            font-weight: 800;
+            text-transform: uppercase;
+            box-shadow: 0 0 10px var(--primary-accent); /* Brillo primario */
+        }
+
+        .add-btn:hover {
+            background-color: #00C293;
+            color: var(--text-light);
+            box-shadow: var(--primary-glow);
+        }
+        
+        .add-btn:active {
+            transform: scale(0.98);
+            box-shadow: none;
+        }
+
+        /* --- FLOATING CART WIDGET (ACRYLIC EFFECT) --- */
+        .cart-float {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            /* Aplicar Glassmorphism/Acrílico */
+            background: var(--glass-bg); 
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-top: 2px solid var(--primary-accent);
+            box-shadow: 0 -8px 30px rgba(0, 255, 194, 0.3);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-radius: 15px 15px 0 0;
+            opacity: 0;
+            transition: opacity 0.3s, background-color 0.3s;
+        }
+        
+        /* --- GENERAL MODALS (ACRYLIC/NEON) --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            overflow: auto;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 550px;
+            /* Borde brillante y sombra */
+            border: 2px solid var(--primary-accent);
+            box-shadow: 0 0 30px var(--primary-accent), inset 0 0 10px var(--primary-accent);
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Specific styles for option chips */
+        .option-chip {
+            padding: 10px 15px;
+            background-color: #2F2F3B;
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, border 0.2s, transform 0.1s, box-shadow 0.2s;
+            font-size: 0.95em;
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+
+        .option-chip:hover {
+            background-color: #4a4a58;
+        }
+
+        .option-chip.selected-boost {
+            background-color: var(--primary-accent);
+            color: var(--bg-dark);
+            font-weight: 800;
+            border-color: var(--secondary-accent);
+            transform: scale(1.05);
+            box-shadow: var(--primary-glow);
+        }
+        
+        /* Estilo para el ícono de Font Awesome dentro del chip */
+        .option-chip .fas {
+            margin-right: 8px;
+            color: inherit; /* Heredar el color para que cambie al ser seleccionado */
+        }
+
+
+        /* Checkout Button (Accent color) */
+        #checkout-btn {
+            padding: 12px 25px;
+            background-color: var(--secondary-accent);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s, box-shadow 0.3s;
+            box-shadow: 0 0 10px var(--secondary-accent); /* Brillo secundario */
+        }
+        
+        #checkout-btn:hover {
+            background-color: #FFC400;
+            transform: scale(1.05);
+            box-shadow: var(--secondary-glow);
+        }
+        
+        /* Checkout List */
+        .checkout-item {
+            padding: 10px 0;
+            /* Línea divisoria de neón */
+            border-bottom: 1px dashed var(--primary-accent);
+        }
+        .checkout-total {
+            font-size: 1.8em;
+            font-weight: 900;
+            color: var(--secondary-accent);
+            text-shadow: 0 0 8px var(--secondary-accent);
+            margin-top: 20px;
+            padding-top: 15px;
+            /* Borde superior de neón sólido */
+            border-top: 3px solid var(--primary-accent);
+        }
+        
+        /* Ajuste para el color de fuente del contador del carrito */
+        #cart-items-count {
+            background-color: var(--primary-accent) !important;
+            color: var(--bg-dark) !important;
+        }
+
+        /* --- NUEVOS ESTILOS PARA EXPLORADOR --- */
+        #ingredient-explorer {
+            background-color: #121218; /* Fondo más sutil para la sección */
+            border: 2px solid var(--primary-accent);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px rgba(0, 255, 194, 0.4);
+        }
+        
+        .ingredient-list-item {
+            padding: 10px;
+            background-color: #2F2F3B;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s, color 0.2s, transform 0.1s, box-shadow 0.2s;
+            border-left: 5px solid transparent;
+            font-weight: 500;
+        }
+
+        .ingredient-list-item:hover {
+            background-color: #4a4a58;
+            border-left-color: var(--secondary-accent);
+        }
+        
+        .ingredient-list-item.selected-ing {
+            background-color: #00FFC230; /* Fondo con el color primario semi-transparente */
+            color: var(--text-light);
+            font-weight: 700;
+            border-left-color: var(--primary-accent);
+            box-shadow: 0 0 10px rgba(0, 255, 194, 0.5);
+            transform: scale(1.02);
+        }
+
+        .data-panel-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid var(--primary-accent);
+            box-shadow: var(--primary-glow);
+        }
+
+        .data-bar-label {
+            font-size: 0.8em;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .data-bar-inner {
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.5s ease-out;
+            background: linear-gradient(90deg, #0A0A10, var(--primary-accent));
+        }
+
+        .data-bar-inner.high {
+            background: linear-gradient(90deg, #0A0A10, #34D399); /* Green */
+        }
+        .data-bar-inner.medium {
+            background: linear-gradient(90deg, #0A0A10, #FBBF24); /* Yellow */
+        }
+        .data-bar-inner.low {
+            background: linear-gradient(90deg, #0A0A10, #EF4444); /* Red */
+        }
+        
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <button id="language-toggle">EN</button>
+        <h1 id="header-title">Smoothie Central 🍓🍍</h1>
+        <p id="header-subtitle" class="text-gray-400">Your daily dose of health and flavor. Choose, customize, and enjoy!</p>
+    </header>
+
+    <!-- NUEVA SECCIÓN: EXPLORADOR NUTRICIONAL INTERACTIVO -->
+    <section id="ingredient-explorer">
+        <h2 id="explorer-title" class="text-3xl font-bold mb-6 border-b-2 pb-2" style="border-bottom-color: var(--secondary-accent); color: var(--secondary-accent); text-shadow: var(--secondary-glow);">Interactive Nutritional Explorer</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Columna 1: Lista de Ingredientes -->
+            <div>
+                <p id="explorer-instructions" class="text-sm mb-4 text-gray-400">Click on any ingredient below to view its bio-profile and health impact data.</p>
+                <div id="ingredient-list" class="max-h-96 overflow-y-auto pr-2">
+                    <!-- Ingredients will be rendered here -->
+                </div>
+            </div>
+
+            <!-- Columna 2: Panel de Datos (Inicialmente Placeholder) -->
+            <div id="data-panel" class="data-panel-card p-6 min-h-full">
+                <h3 id="panel-title" class="text-xl font-extrabold mb-3" style="color: var(--primary-accent);">Select an Ingredient</h3>
+                <p id="panel-description" class="text-gray-400 mb-6">Access the simulated bio-profile for detailed nutritional metrics and impact assessment.</p>
+                
+                <div id="panel-content">
+                    <div class="space-y-4">
+                        <!-- Las barras de datos se renderizarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN DE PRODUCTOS EXISTENTE -->
+    <h2 id="products-section-title" class="text-3xl font-bold mb-6 border-b-2 pb-2" style="border-bottom-color: var(--primary-accent); color: var(--primary-accent); text-shadow: var(--primary-glow);">Smoothie Offerings</h2>
+    <div id="products-grid" class="grid gap-6 md:gap-8 lg:grid-cols-4 sm:grid-cols-2">
+        <!-- Product cards will be rendered here -->
+    </div>
+</div>
+
+<!-- Floating Cart Widget (Always visible) -->
+<div class="cart-float" id="cart-float-widget">
+    <div class="cart-info flex items-center">
+        <i class="fas fa-shopping-basket fa-lg mr-3" style="color: var(--secondary-accent); text-shadow: var(--secondary-glow);"></i>
+        <span id="cart-items-count" class="bg-primary-accent text-card-bg rounded-full px-3 py-1 font-bold text-sm mr-4">0</span>
+        <span id="cart-total-display" class="text-2xl font-extrabold" style="color: var(--primary-accent); text-shadow: var(--primary-glow);">$0.00</span>
+    </div>
+    <button id="checkout-btn" class="flex items-center">
+        <i class="fas fa-money-check-alt mr-2"></i>
+        <span>Checkout</span>
+    </button>
+</div>
+
+<!-- CUSTOMIZATION MODAL (Remains the same) -->
+<div id="customization-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn text-gray-400 hover:text-red-500 cursor-pointer absolute top-4 right-6 text-3xl font-bold transition">&times;</span>
+        <h3 id="modal-title" class="text-2xl font-bold mb-4 border-b-2 pb-2" style="border-bottom-color: var(--primary-accent); color: var(--primary-accent); text-shadow: 0 0 5px var(--primary-accent);">Customize Smoothie</h3>
+        
+        <form id="customization-form">
+            <!-- Hidden base ingredient inputs -->
+            <input type="hidden" id="modal-smoothie-id" value="">
+            <input type="hidden" id="modal-smoothie-name" value="">
+            <input type="hidden" id="modal-smoothie-price" value="">
+            <input type="hidden" id="modal-smoothie-is-custom" value="false">
+
+            <!-- Price Update Display -->
+            <div class="flex justify-between items-center p-3 rounded-lg mb-4" style="background-color: #2F2F3B; border: 1px solid var(--primary-accent);">
+                <span class="text-sm font-semibold text-gray-300">Current Price:</span>
+                <span id="current-custom-price" class="text-2xl font-extrabold" style="color: var(--secondary-accent); text-shadow: var(--secondary-glow);">$0.00</span>
+            </div>
+
+            <!-- Container for fruit selection (BYO ONLY) -->
+            <div id="fruit-selector-group" style="display: none;">
+                <label id="label-fruits-byo" class="block mt-4 font-semibold" style="color: var(--primary-accent);">Choose 4 Fruits for your Base (Required):</label>
+                <div class="option-group flex flex-wrap gap-2 mt-2" id="fruit-options">
+                    <!-- Fruits will load dynamically -->
+                </div>
+                <p id="fruit-validation-message" class="text-red-400 text-sm mt-1" style="display: none;"></p>
+            </div>
+
+            <!-- Boosters (Common to both) -->
+            <div id="booster-group">
+                <label id="label-boosters" class="block mt-4 font-semibold" style="color: var(--primary-accent);">Add Boosters (Max 2, Extra Charge):</label>
+                <div class="option-group flex flex-wrap gap-2 mt-2" id="booster-options">
+                    <!-- Boosters will load dynamically -->
+                </div>
+            </div>
+
+            <!-- Remove Ingredients (PRE-BUILT ONLY) -->
+            <div id="remove-options-group">
+                <label id="label-remove" class="block mt-4 font-semibold" style="color: var(--primary-accent);">Remove Ingredients (Allergies or Aversions):</label>
+                <div class="option-group flex flex-wrap gap-2 mt-2" id="remove-options">
+                    <!-- Smoothie ingredients will load dynamically -->
+                </div>
+            </div>
+            
+            <button type="submit" class="add-btn mt-6 flex items-center justify-center">
+                <i class="fas fa-cart-plus mr-2"></i>
+                <span id="add-to-cart-modal">Add to Cart</span>
+            </button>
+        </form>
+    </div>
+</div>
+
+<!-- CHECKOUT MODAL (Replaces alert for order summary) -->
+<div id="checkout-summary-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn text-gray-400 hover:text-red-500 cursor-pointer absolute top-4 right-6 text-3xl font-bold transition">&times;</span>
+        <h3 id="checkout-modal-title" class="text-2xl font-bold mb-4 border-b-2 pb-2" style="border-bottom-color: var(--primary-accent); color: var(--primary-accent); text-shadow: 0 0 5px var(--primary-accent);">Order Summary</h3>
+        
+        <div id="checkout-items-list" class="max-h-80 overflow-y-auto mb-4 pr-2">
+            <!-- Cart items will be rendered here -->
+        </div>
+        
+        <div class="flex justify-between items-center checkout-total">
+            <span id="checkout-total-label">TOTAL TO PAY:</span>
+            <span id="checkout-total-price">$0.00</span>
+        </div>
+        
+        <button id="confirm-checkout-btn" class="add-btn mt-6 flex items-center justify-center" style="background-color: var(--secondary-accent); color: var(--bg-dark); box-shadow: 0 0 10px var(--secondary-accent);">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span>Confirm Payment</span>
+        </button>
+    </div>
+</div>
+
+<!-- GENERIC MESSAGE MODAL (Replaces simple alerts) -->
+<div id="message-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn text-gray-400 hover:text-red-500 cursor-pointer absolute top-4 right-6 text-3xl font-bold transition">&times;</span>
+        <h3 id="message-modal-title" class="text-xl font-bold mb-4" style="color: var(--primary-accent); text-shadow: 0 0 5px var(--primary-accent);">Notification</h3>
+        <p id="message-modal-text" class="mb-6 text-gray-300"></p>
+        <button onclick="document.getElementById('message-modal').style.display='none'" class="add-btn">Accept</button>
+    </div>
+</div>
+
+
+<script>
+    // --- JAVASCRIPT LOGIC ---
+
+    // GLOBALS
+    let currentLanguage = 'es'; // Setting default to ES based on user query
+    let cart = [];
+    let allIngredients = []; // Will store a combined, unique list of all ingredients
+    
+    // Custom notification function (replaces alert())
+    const showMessage = (title, message, isError = false) => {
+        const modal = document.getElementById('message-modal');
+        document.getElementById('message-modal-title').textContent = title;
+        document.getElementById('message-modal-text').textContent = message;
+        
+        const titleElement = document.getElementById('message-modal-title');
+        const primaryAccent = getComputedStyle(document.documentElement).getPropertyValue('--primary-accent').trim();
+        const errorColor = getComputedStyle(document.documentElement).getPropertyValue('--error-color').trim();
+
+        titleElement.style.color = isError ? errorColor : primaryAccent;
+        titleElement.style.textShadow = isError ? '0 0 5px ' + errorColor : '0 0 5px ' + primaryAccent;
+        
+        modal.style.display = 'flex';
+    };
+
+
+    // 0. LANGUAGE MANAGEMENT
+    const translations = {
+        es: {
+            title: 'Smoothie Central 🍓🍍',
+            subtitle: 'Tu dosis diaria de salud y sabor. ¡Elige, personaliza y disfruta!',
+            explorer_title: 'Explorador Nutricional Interactivo',
+            explorer_instructions: 'Haz clic en cualquier ingrediente para ver su bio-perfil y datos de impacto en la salud (Simulado).',
+            panel_select: 'Selecciona un Ingrediente',
+            panel_desc: 'Accede al bio-perfil simulado para obtener métricas nutricionales detalladas y evaluación de impacto.',
+            products_section_title: 'Nuestra Oferta de Smoothies',
+            customize_smoothie: 'Personalizar Smoothie',
+            byo_start: '¡Empezar a Crear!',
+            add_customize: 'Añadir y Personalizar',
+            add_to_cart: 'Añadir a la Cesta',
+            checkout_btn: 'Pagar',
+            label_fruits_byo: 'Elige 4 Frutas para tu Base (Obligatorio):',
+            label_boosters: 'Añadir Boosters (Máximo 2, Cargo Extra):',
+            label_remove: 'Retirar Ingredientes (Alergias o Aversiones):',
+            alert_max_boosters: 'Solo puedes seleccionar 2 Boosters.',
+            alert_invalid_fruits_title: 'Selección Incompleta',
+            alert_invalid_fruits: (count) => `¡Espera! Debes seleccionar exactamente 4 frutas para tu Smoothie Personalizado. Has seleccionado ${count}.`,
+            alert_empty_cart_title: 'Cesta Vacía',
+            alert_empty_cart_2: 'Tu cesta está vacía. ¡Añade un smoothie para comenzar!',
+            checkout_summary_title: 'Resumen de tu Pedido',
+            checkout_total: 'TOTAL A PAGAR:',
+            checkout_success_title: '¡Pedido Confirmado!',
+            checkout_success: '¡Pago simulado con éxito! Gracias por tu compra.',
+            base_prefix: 'Base: ',
+            removed_suffix: 'Ingrediente(s) Retirado(s)',
+            booster_suffix: 'Booster(s) Extra',
+            byo_description: '¡Crea tu propia receta! Base: $5.00 (Incluye 4 frutas y líquido base).',
+            button_confirm: 'Confirmar Pago',
+            button_accept: 'Aceptar',
+            energy: 'Energía',
+            immunity: 'Inmunidad',
+            recovery: 'Recuperación',
+            digestion: 'Digestión',
+            metrics_description: (name) => `Análisis simulado de impacto en la salud para ${name}.`,
+        },
+        en: {
+            title: 'Smoothie Central 🍓🍍',
+            subtitle: 'Your daily dose of health and flavor. Choose, customize, and enjoy!',
+            explorer_title: 'Interactive Nutritional Explorer',
+            explorer_instructions: 'Click on any ingredient below to view its bio-profile and health impact data (Simulated).',
+            panel_select: 'Select an Ingredient',
+            panel_desc: 'Access the simulated bio-profile for detailed nutritional metrics and impact assessment.',
+            products_section_title: 'Smoothie Offerings',
+            customize_smoothie: 'Customize Smoothie',
+            byo_start: 'Start Creating!',
+            add_customize: 'Add and Customize',
+            add_to_cart: 'Add to Cart',
+            checkout_btn: 'Checkout',
+            label_fruits_byo: 'Choose 4 Fruits for your Base (Required):',
+            label_boosters: 'Add Boosters (Max 2, Extra Charge):',
+            label_remove: 'Remove Ingredients (Allergies or Aversions):',
+            alert_max_boosters: 'You can only select 2 Boosters.',
+            alert_invalid_fruits_title: 'Incomplete Selection',
+            alert_invalid_fruits: (count) => `Hold on! You must select exactly 4 fruits for your Custom Smoothie. You have selected ${count}.`,
+            alert_empty_cart_title: 'Empty Cart',
+            alert_empty_cart_2: 'Your cart is empty. Add a smoothie to start!',
+            checkout_summary_title: 'Order Summary',
+            checkout_total: 'TOTAL TO PAY:',
+            checkout_success_title: 'Order Confirmed!',
+            checkout_success: 'Payment simulated successfully! Thank you for your purchase.',
+            base_prefix: 'Base: ',
+            removed_suffix: 'Removed Ingredient(s)',
+            booster_suffix: 'Extra Booster(s)',
+            byo_description: 'Create your own recipe! Base: $5.00 (Includes 4 fruits and liquid base).',
+            button_confirm: 'Confirm Payment',
+            button_accept: 'Accept',
+            energy: 'Energy',
+            immunity: 'Immunity',
+            recovery: 'Recovery',
+            digestion: 'Digestion',
+            metrics_description: (name) => `Simulated health impact analysis for ${name}.`,
+        }
+    };
+    
+    // Helper function for translation
+    function T(key, lang = currentLanguage) {
+        const value = translations[lang][key];
+        return typeof value === 'function' ? value(arguments[2]) : value; // Handle functions with argument
+    }
+
+
+    // 1. SHOP DATABASE
+    const PRODUCTS = [
+        { 
+            id: 'S01', 
+            name: { es: 'Energía Solar', en: 'Sun Power' }, 
+            icon: '🌞',
+            price: 6.50, 
+            description: { es: 'Mango, piña, plátano, cúrcuma y agua de coco.', en: 'Mango, pineapple, banana, turmeric, and coconut water.' },
+            ingredients: [
+                { es: 'Mango', en: 'Mango' }, 
+                { es: 'Piña', en: 'Pineapple' }, 
+                { es: 'Plátano', en: 'Banana' }, 
+                { es: 'Cúrcuma', en: 'Turmeric' }, 
+                { es: 'Agua de Coco', en: 'Coconut Water' }
+            ],
+            isCustom: false
+        },
+        { 
+            id: 'S02', 
+            name: { es: 'Poder Verde', en: 'Green Force' }, 
+            icon: '🍃',
+            price: 7.00, 
+            description: { es: 'Espinaca, aguacate, manzana verde, jengibre y leche de almendras.', en: 'Spinach, avocado, green apple, ginger, and almond milk.' },
+            ingredients: [
+                { es: 'Espinaca', en: 'Spinach' }, 
+                { es: 'Aguacate', en: 'Avocado' }, 
+                { es: 'Manzana Verde', en: 'Green Apple' }, 
+                { es: 'Jengibre', en: 'Ginger' }, 
+                { es: 'Leche de Almendras', en: 'Almond Milk' }
+            ],
+            isCustom: false
+        },
+        { 
+            id: 'S03', 
+            name: { es: 'Berry Protein', en: 'Berry Protein' }, 
+            icon: '🫐',
+            price: 7.50, 
+            description: { es: 'Bayas mixtas, yogur griego, vainilla y un toque de miel.', en: 'Mixed berries, Greek yogurt, vanilla, and a touch of honey.' },
+            ingredients: [
+                { es: 'Bayas Mixtas', en: 'Mixed Berries' }, 
+                { es: 'Yogur Griego', en: 'Greek Yogurt' }, 
+                { es: 'Vainilla', en: 'Vanilla' }, 
+                { es: 'Miel', en: 'Honey' }
+            ],
+            isCustom: false
+        },
+        { 
+            id: 'S04', 
+            name: { es: 'Tropical Detox', en: 'Tropical Detox' }, 
+            icon: '🥥',
+            price: 6.80, 
+            description: { es: 'Maracuyá, fresa, limón, semillas de chía y agua.', en: 'Passion fruit, strawberry, lemon, chia seeds, and water.' },
+            ingredients: [
+                { es: 'Maracuyá', en: 'Passion Fruit' }, 
+                { es: 'Fresa', en: 'Strawberry' }, 
+                { es: 'Limón', en: 'Lemon' },
+                { es: 'Semillas de Chía', en: 'Chia Seeds' }, 
+                { es: 'Agua', en: 'Water' }
+            ],
+            isCustom: false
+        },
+        // NEW CUSTOM PRODUCT (BYO)
+        { 
+            id: 'BYO', 
+            name: { es: 'Smoothie Personalizado', en: 'Custom Smoothie' }, 
+            icon: '✨',
+            price: 5.00, 
+            description: { es: T('byo_description', 'es'), en: T('byo_description', 'en') },
+            ingredients: [],
+            isCustom: true
+        }
+    ];
+
+    const BOOSTERS = [
+        // FIX: Reemplazado el emoji '💪' por el icono de Font Awesome 'fa-dumbbell' para mejor consistencia y visualización.
+        { name: { es: 'Proteína (Whey)', en: 'Protein (Whey)' }, price: 1.50, icon: '<i class="fas fa-dumbbell"></i>', data: { energy: 40, immunity: 20, recovery: 85, digestion: 10 } },
+        { name: { es: 'Colágeno', en: 'Collagen' }, price: 1.80, icon: '💧', data: { energy: 10, immunity: 15, recovery: 60, digestion: 50 } },
+        { name: { es: 'Semillas Chía', en: 'Chia Seeds' }, price: 0.50, icon: '🌱', data: { energy: 30, immunity: 35, recovery: 20, digestion: 90 } },
+        { name: { es: 'Jengibre Extra', en: 'Extra Ginger' }, price: 0.75, icon: '🔥', data: { energy: 50, immunity: 80, recovery: 40, digestion: 50 } }
+    ];
+    
+    // FRUIT OPTIONS FOR BYO and EXPLORER
+    const FRUIT_OPTIONS = [
+        { name: { es: 'Plátano', en: 'Banana' }, icon: '🍌', data: { energy: 90, immunity: 30, recovery: 30, digestion: 70 } }, 
+        { name: { es: 'Fresa', en: 'Strawberry' }, icon: '🍓', data: { energy: 40, immunity: 90, recovery: 50, digestion: 40 } }, 
+        { name: { es: 'Mango', en: 'Mango' }, icon: '🥭', data: { energy: 70, immunity: 75, recovery: 20, digestion: 60 } }, 
+        { name: { es: 'Piña', en: 'Pineapple' }, icon: '🍍', data: { energy: 60, immunity: 65, recovery: 55, digestion: 80 } }, 
+        { name: { es: 'Arándanos', en: 'Blueberries' }, icon: '🫐', data: { energy: 30, immunity: 95, recovery: 45, digestion: 25 } }, 
+        { name: { es: 'Melón', en: 'Melon' }, icon: '🍈', data: { energy: 50, immunity: 50, recovery: 30, digestion: 90 } }, 
+        { name: { es: 'Aguacate', en: 'Avocado' }, icon: '🥑', data: { energy: 60, immunity: 40, recovery: 70, digestion: 50 } },
+        { name: { es: 'Manzana', en: 'Apple' }, icon: '🍎', data: { energy: 55, immunity: 45, recovery: 25, digestion: 85 } } 
+    ];
+    
+    // OTHER INGREDIENTS (used in pre-builts)
+    const OTHER_INGREDIENTS = [
+        { name: { es: 'Cúrcuma', en: 'Turmeric' }, icon: '🟠', data: { energy: 45, immunity: 95, recovery: 70, digestion: 40 } }, 
+        { name: { es: 'Agua de Coco', en: 'Coconut Water' }, icon: '🌴', data: { energy: 65, immunity: 30, recovery: 80, digestion: 30 } },
+        { name: { es: 'Espinaca', en: 'Spinach' }, icon: '🌿', data: { energy: 30, immunity: 70, recovery: 60, digestion: 90 } },
+        { name: { es: 'Manzana Verde', en: 'Green Apple' }, icon: '🍏', data: { energy: 50, immunity: 40, recovery: 20, digestion: 95 } },
+        { name: { es: 'Jengibre', en: 'Ginger' }, icon: '🫚', data: { energy: 50, immunity: 80, recovery: 40, digestion: 50 } },
+        { name: { es: 'Leche de Almendras', en: 'Almond Milk' }, icon: '🥛', data: { energy: 20, immunity: 10, recovery: 15, digestion: 25 } },
+        { name: { es: 'Yogur Griego', en: 'Greek Yogurt' }, icon: '🥣', data: { energy: 40, immunity: 30, recovery: 85, digestion: 45 } },
+        { name: { es: 'Vainilla', en: 'Vanilla' }, icon: '🤎', data: { energy: 10, immunity: 5, recovery: 5, digestion: 10 } },
+        { name: { es: 'Miel', en: 'Honey' }, icon: '🍯', data: { energy: 80, immunity: 20, recovery: 10, digestion: 15 } },
+        { name: { es: 'Maracuyá', en: 'Passion Fruit' }, icon: '🟡', data: { energy: 60, immunity: 70, recovery: 30, digestion: 55 } },
+        { name: { es: 'Limón', en: 'Lemon' }, icon: '🍋', data: { energy: 20, immunity: 85, recovery: 10, digestion: 70 } },
+        { name: { es: 'Agua', en: 'Water' }, icon: '💧', data: { energy: 5, immunity: 5, recovery: 5, digestion: 5 } },
+    ];
+
+
+    // 2. EXPLORER LOGIC
+    
+    const getAllUniqueIngredients = () => {
+        const uniqueNamesEs = new Set();
+        let ingredients = [];
+
+        // 1. Add FRUIT_OPTIONS
+        FRUIT_OPTIONS.forEach(f => {
+            if (!uniqueNamesEs.has(f.name.es)) {
+                uniqueNamesEs.add(f.name.es);
+                ingredients.push(f);
+            }
+        });
+        
+        // 2. Add BOOSTERS
+        BOOSTERS.forEach(b => {
+            if (!uniqueNamesEs.has(b.name.es)) {
+                uniqueNamesEs.add(b.name.es);
+                ingredients.push(b);
+            }
+        });
+
+        // 3. Add OTHER_INGREDIENTS
+        OTHER_INGREDIENTS.forEach(o => {
+            if (!uniqueNamesEs.has(o.name.es)) {
+                uniqueNamesEs.add(o.name.es);
+                ingredients.push(o);
+            }
+        });
+        
+        // Sort alphabetically by English name for consistency
+        ingredients.sort((a, b) => a.name.en.localeCompare(b.name.en));
+
+        return ingredients;
+    };
+
+    const renderIngredientExplorer = (ingredients) => {
+        const listContainer = document.getElementById('ingredient-list');
+        const lang = currentLanguage;
+        
+        listContainer.innerHTML = ingredients.map(ing => 
+            `<div class="ingredient-list-item flex items-center" data-name-es="${ing.name.es}" data-name-en="${ing.name.en}">
+                <span class="mr-3">${ing.icon}</span> ${ing.name[lang]}
+            </div>`
+        ).join('');
+        
+        document.querySelectorAll('.ingredient-list-item').forEach(item => {
+            item.addEventListener('click', handleIngredientSelection);
+        });
+    };
+    
+    const handleIngredientSelection = (event) => {
+        const selectedItem = event.currentTarget;
+        const nameEs = selectedItem.dataset.nameEs;
+        
+        // Remove selection from all items
+        document.querySelectorAll('.ingredient-list-item').forEach(item => {
+            item.classList.remove('selected-ing');
+        });
+        
+        // Set selection for current item
+        selectedItem.classList.add('selected-ing');
+
+        // Find data object
+        const all = [...FRUIT_OPTIONS, ...BOOSTERS, ...OTHER_INGREDIENTS];
+        const dataObject = all.find(item => item.name.es === nameEs);
+
+        if (dataObject && dataObject.data) {
+            renderDataPanel(dataObject);
+        }
+    };
+    
+    const renderDataPanel = (ingredient) => {
+        const panelTitle = document.getElementById('panel-title');
+        const panelDesc = document.getElementById('panel-description');
+        const panelContent = document.getElementById('panel-content');
+        const lang = currentLanguage;
+
+        // Si el ícono es HTML (como la mancuerna de Font Awesome), se debe inyectar
+        panelTitle.innerHTML = `${ingredient.icon} ${ingredient.name[lang]}`;
+        panelDesc.textContent = T('metrics_description', lang, ingredient.name[lang]);
+        
+        const metrics = [
+            { key: 'energy', label: T('energy'), value: ingredient.data.energy },
+            { key: 'immunity', label: T('immunity'), value: ingredient.data.immunity },
+            { key: 'recovery', label: T('recovery'), value: ingredient.data.recovery },
+            { key: 'digestion', label: 'Digestion', value: ingredient.data.digestion }
+        ];
+
+        let contentHtml = '<div class="space-y-4">';
+        metrics.forEach(metric => {
+            let barClass = 'low';
+            if (metric.value > 70) barClass = 'high';
+            else if (metric.value > 40) barClass = 'medium';
+
+            contentHtml += `
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="data-bar-label">${metric.label}</span>
+                        <span class="text-sm font-bold text-secondary-accent">${metric.value}%</span>
+                    </div>
+                    <div class="w-full bg-gray-700 rounded-full">
+                        <div class="data-bar-inner ${barClass}" style="width: ${metric.value}%;"></div>
+                    </div>
+                </div>
+            `;
+        });
+        contentHtml += '</div>';
+        
+        panelContent.innerHTML = contentHtml;
+    };
+
+
+    // 3. CART UTILITY FUNCTIONS
+    const updateCartDisplay = () => {
+        const total = cart.reduce((sum, item) => sum + item.finalPrice, 0);
+        
+        document.getElementById('cart-items-count').textContent = cart.length;
+        document.getElementById('cart-total-display').textContent = `$${total.toFixed(2)}`;
+        
+        // Show or hide the floating cart
+        document.getElementById('cart-float-widget').style.opacity = cart.length > 0 ? '1' : '0';
+    };
+
+    const formatSmoothieName = (smoothie) => {
+        const lang = currentLanguage;
+        let name = smoothie.name[lang];
+        let details = [];
+        
+        if (smoothie.fruits && smoothie.fruits.length > 0) {
+            // BYO: Show the 4 base fruits
+            const fruitNames = smoothie.fruits.map(f => f[lang]); 
+            details.push(`${T('base_prefix')}${fruitNames.join(', ')}`);
+        } else {
+            // Pre-built: Show removed ingredients
+            if (smoothie.removed && smoothie.removed.length > 0) {
+                details.push(`${smoothie.removed.length} ${T('removed_suffix')}`);
+            }
+        }
+
+        // Boosters
+        if (smoothie.boosters && smoothie.boosters.length > 0) {
+            details.push(`+${smoothie.boosters.length} ${T('booster_suffix')}`);
+        }
+        
+        return details.length > 0 ? `${name} (${details.join(' | ')})` : name;
+    };
+
+    // Generic function to close modals
+    const closeModal = (modalId) => {
+        document.getElementById(modalId).style.display = 'none';
+        // Reset chips only if it's the customization modal
+        if (modalId === 'customization-modal') {
+            document.querySelectorAll('#customization-modal .option-chip').forEach(chip => {
+                chip.classList.remove('selected-boost');
+            });
+            document.getElementById('fruit-validation-message').style.display = 'none';
+        }
+    }
+
+    // Function to calculate and update the price in the customization modal
+    const updateModalPrice = (basePrice) => {
+        let currentPrice = basePrice;
+        
+        // Add booster prices
+        document.querySelectorAll('.option-chip.selected-boost[data-type="booster"]').forEach(chip => {
+            currentPrice += parseFloat(chip.dataset.price);
+        });
+        
+        document.getElementById('current-custom-price').textContent = `$${currentPrice.toFixed(2)}`;
+    };
+
+    // 4. FUNCTION TO OPEN CUSTOMIZATION MODAL
+    const openCustomizationModal = (productId) => {
+        const product = PRODUCTS.find(p => p.id === productId);
+        if (!product) return;
+
+        const isCustom = product.isCustom;
+        const lang = currentLanguage;
+        
+        // Reset fruit validation
+        document.getElementById('fruit-validation-message').style.display = 'none';
+        updateModalPrice(product.price); // Initialize price display
+
+        // 1. Update hidden modal data
+        document.getElementById('modal-smoothie-id').value = product.id;
+        document.getElementById('modal-smoothie-name').value = product.name[lang];
+        document.getElementById('modal-smoothie-price').value = product.price;
+        document.getElementById('modal-smoothie-is-custom').value = isCustom; 
+        
+        document.getElementById('modal-title').textContent = `${T('customize_smoothie')}: ${product.name[lang]}`;
+
+        // 2. DYNAMIC UI RENDERING
+        const fruitSelectorGroup = document.getElementById('fruit-selector-group');
+        const removeOptionsGroup = document.getElementById('remove-options-group');
+        const fruitOptions = document.getElementById('fruit-options');
+        const removeOptions = document.getElementById('remove-options');
+        
+        if (isCustom) {
+            // BYO Mode: Show Fruit Selector and hide Remove Ingredients
+            fruitSelectorGroup.style.display = 'block';
+            removeOptionsGroup.style.display = 'none';
+
+            // Populate Fruit options
+            fruitOptions.innerHTML = FRUIT_OPTIONS.map(f => 
+                `<div class="option-chip" data-type="fruit" data-name-es="${f.name.es}" data-name-en="${f.name.en}">
+                    ${f.icon} ${f.name[lang]}
+                </div>`
+            ).join('');
+            
+            removeOptions.innerHTML = ''; // Clear
+            document.getElementById('label-fruits-byo').textContent = T('label_fruits_byo');
+
+        } else {
+            // Standard Mode: Show Remove Ingredients and hide Fruit Selector
+            fruitSelectorGroup.style.display = 'none';
+            removeOptionsGroup.style.display = 'block';
+
+            // Populate Remove Ingredients options (standard)
+            removeOptions.innerHTML = product.ingredients.map(ing => 
+                `<div class="option-chip" data-type="remove" data-name-es="${ing.es}" data-name-en="${ing.en}">
+                    ${ing[lang]}
+                </div>`
+            ).join('');
+            
+            fruitOptions.innerHTML = ''; // Clear
+            document.getElementById('label-remove').textContent = T('label_remove');
+        }
+        
+        // 3. BOOSTERS (Common to both)
+        const boosterOptions = document.getElementById('booster-options');
+        boosterOptions.innerHTML = BOOSTERS.map(b => 
+            `<div class="option-chip" data-type="booster" data-name-es="${b.name.es}" data-name-en="${b.name.en}" data-price="${b.price.toFixed(2)}">
+                ${b.icon} ${b.name[lang]} (+$${b.price.toFixed(2)})
+            </div>`
+        ).join('');
+        document.getElementById('label-boosters').textContent = T('label_boosters');
+
+        // 4. Add listeners to chips
+        document.querySelectorAll('#customization-modal .option-chip').forEach(chip => {
+            chip.addEventListener('click', handleChipSelection);
+        });
+        
+        document.getElementById('add-to-cart-modal').textContent = T('add_to_cart');
+
+        document.getElementById('customization-modal').style.display = 'flex';
+    };
+    
+    // 5. MODAL CHIP SELECTION HANDLER
+    const handleChipSelection = (event) => {
+        const chip = event.target.closest('.option-chip');
+        if (!chip) return;
+
+        const type = chip.dataset.type;
+        const basePrice = parseFloat(document.getElementById('modal-smoothie-price').value);
+
+        if (type === 'booster') {
+            const selectedBoosters = document.querySelectorAll('.option-chip.selected-boost[data-type="booster"]').length;
+            
+            if (chip.classList.contains('selected-boost')) {
+                chip.classList.remove('selected-boost');
+            } else if (selectedBoosters < 2) {
+                chip.classList.add('selected-boost');
+            } else {
+                showMessage('Booster Limit Reached', T('alert_max_boosters'), true); 
+            }
+            updateModalPrice(basePrice);
+        } else if (type === 'remove') {
+            chip.classList.toggle('selected-boost');
+        } else if (type === 'fruit') {
+            const validationMsg = document.getElementById('fruit-validation-message');
+            let selectedFruitsCount = document.querySelectorAll('.option-chip.selected-boost[data-type="fruit"]').length;
+
+            if (chip.classList.contains('selected-boost')) {
+                chip.classList.remove('selected-boost');
+                selectedFruitsCount--;
+            } else if (selectedFruitsCount < 4) {
+                chip.classList.add('selected-boost');
+                selectedFruitsCount++;
+            } else {
+                showMessage(T('alert_invalid_fruits_title'), T('alert_invalid_fruits', currentLanguage, selectedFruitsCount + 1), true);
+            }
+            
+            // Update real-time validation message (BYO)
+            if (selectedFruitsCount !== 4) {
+                validationMsg.textContent = T('alert_invalid_fruits', currentLanguage, selectedFruitsCount);
+                validationMsg.style.display = 'block';
+            } else {
+                validationMsg.style.display = 'none';
+            }
+        }
+    };
+
+
+    // 6. MODAL SUBMISSION HANDLER
+    document.getElementById('customization-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const baseId = document.getElementById('modal-smoothie-id').value;
+        const baseProduct = PRODUCTS.find(p => p.id === baseId);
+        const isCustom = document.getElementById('modal-smoothie-is-custom').value === 'true';
+        
+        let finalPrice = parseFloat(baseProduct.price);
+        let boosters = [];
+        let removed = [];
+        let selectedFruits = [];
+
+        // VALIDATION EXCLUSIVE FOR BYO
+        if (isCustom) {
+            document.querySelectorAll('.option-chip.selected-boost[data-type="fruit"]').forEach(chip => {
+                // Store the name object for future translation
+                selectedFruits.push({ es: chip.dataset.nameEs, en: chip.dataset.nameEn });
+            });
+            
+            if (selectedFruits.length !== 4) {
+                showMessage(T('alert_invalid_fruits_title'), T('alert_invalid_fruits', currentLanguage, selectedFruits.length), true);
+                return; // Stop adding to cart
+            }
+        }
+        
+        // Collect selected boosters (applies to both)
+        document.querySelectorAll('.option-chip.selected-boost[data-type="booster"]').forEach(chip => {
+            const price = parseFloat(chip.dataset.price);
+            boosters.push({ 
+                name: { es: chip.dataset.nameEs, en: chip.dataset.nameEn }, 
+                price: price 
+            });
+            finalPrice += price; // Add booster price
+        });
+
+        // Collect ingredients to remove (pre-built only)
+        if (!isCustom) {
+            document.querySelectorAll('.option-chip.selected-boost[data-type="remove"]').forEach(chip => {
+                removed.push({ es: chip.dataset.nameEs, en: chip.dataset.nameEn });
+            });
+        }
+
+        // Create the customized item object
+        const item = {
+            baseId: baseId,
+            name: baseProduct.name, // Object with translations
+            basePrice: baseProduct.price,
+            boosters: boosters,
+            removed: removed,
+            fruits: selectedFruits.length > 0 ? selectedFruits : null,
+            finalPrice: finalPrice,
+            // Unique ID to differentiate customized items
+            cartItemId: Date.now() 
+        };
+
+        cart.push(item);
+        updateCartDisplay();
+        closeModal('customization-modal');
+    });
+
+
+    // 7. RENDER INITIAL PRODUCTS AND UI UPDATE
+    const renderProducts = () => {
+        const grid = document.getElementById('products-grid');
+        const lang = currentLanguage;
+        
+        grid.innerHTML = PRODUCTS.map(product => {
+            const isCustom = product.isCustom;
+
+            const iconClass = isCustom ? 'fa-magic' : 'fa-blender';
+            
+            // Texto descriptivo con clase sutil de texto
+            const descriptionHtml = `<p class="text-sm ${isCustom ? 'text-yellow-400' : 'text-gray-400'} mb-3">${product.description[lang]}</p>`;
+            
+            // Estilo de precio con glow
+            const priceStyle = `style="color: var(--secondary-accent); text-shadow: var(--secondary-glow);"`;
+
+            return `
+                <div class="smoothie-card">
+                    <div class="card-image-placeholder">${product.icon}</div>
+                    <div class="smoothie-card-content p-5 flex flex-col justify-between flex-grow">
+                        <div>
+                            <h3 class="text-2xl font-extrabold mb-1" style="color: var(--primary-accent); text-shadow: 0 0 5px var(--primary-accent);">${product.name[lang]}</h3>
+                            ${descriptionHtml}
+                        </div>
+                        <div class="mt-4">
+                            <div class="price text-xl font-extrabold mb-3" ${priceStyle}>$${product.price.toFixed(2)}</div>
+                            <button class="add-btn flex items-center justify-center" data-id="${product.id}">
+                                <i class="fas ${iconClass} mr-2"></i> <span>${isCustom ? T('byo_start') : T('add_customize')}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        // Add listeners to the add buttons
+        document.querySelectorAll('.add-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                openCustomizationModal(e.currentTarget.dataset.id);
+            });
+        });
+    };
+    
+    // Central function to update the language of the entire UI
+    const updateUI = () => {
+        const lang = currentLanguage;
+        
+        // 1. Header
+        document.getElementById('header-title').textContent = T('title');
+        document.getElementById('header-subtitle').textContent = T('subtitle');
+        document.getElementById('language-toggle').textContent = lang === 'es' ? 'EN' : 'ES'; // Toggle text
+        
+        // 2. Explorer Section
+        document.getElementById('explorer-title').textContent = T('explorer_title');
+        document.getElementById('explorer-instructions').textContent = T('explorer_instructions');
+        document.getElementById('panel-title').textContent = T('panel_select');
+        document.getElementById('panel-description').textContent = T('panel_desc');
+        document.getElementById('products-section-title').textContent = T('products_section_title');
+
+        // Re-render ingredient list with new language
+        if (allIngredients.length > 0) {
+            renderIngredientExplorer(allIngredients);
+        }
+        
+        // 3. Cart
+        document.getElementById('checkout-btn').querySelector('span').textContent = T('checkout_btn');
+        updateCartDisplay(); 
+
+        // 4. Products
+        renderProducts();
+        
+        // 5. If the customization modal is open, close it and reopen it to update texts
+        if (document.getElementById('customization-modal').style.display === 'flex') {
+            const currentId = document.getElementById('modal-smoothie-id').value;
+            closeModal('customization-modal');
+            if (currentId) openCustomizationModal(currentId);
+        }
+        
+        // 6. Update texts in the checkout modal (if open)
+        document.getElementById('checkout-modal-title').textContent = T('checkout_summary_title');
+        document.getElementById('checkout-total-label').textContent = T('checkout_total');
+        document.getElementById('confirm-checkout-btn').querySelector('span').textContent = T('button_confirm');
+
+        // 7. Update generic message modal button
+        document.querySelector('#message-modal .add-btn').textContent = T('button_accept');
+    };
+    
+    // Handle language change
+    document.getElementById('language-toggle').addEventListener('click', () => {
+        currentLanguage = currentLanguage === 'es' ? 'en' : 'es';
+        updateUI();
+    });
+
+
+    // 8. MODAL AND CHECKOUT HANDLING
+
+    // Set up listeners to close modals (delegated)
+    document.querySelectorAll('.modal').forEach(modal => {
+        // Listener for the close button (x)
+        modal.querySelector('.close-btn').onclick = () => {
+            closeModal(modal.id);
+        };
+
+        // Listener for click outside the modal
+        modal.onclick = (event) => {
+            if (event.target === modal) {
+                closeModal(modal.id);
+            }
+        };
+    });
+    
+    // CHECKOUT MODAL RENDERING
+    const renderCheckoutModal = () => {
+        if (cart.length === 0) {
+            showMessage(T('alert_empty_cart_title'), T('alert_empty_cart_2'), true);
+            return;
+        }
+        
+        const lang = currentLanguage;
+        const total = cart.reduce((sum, item) => sum + item.finalPrice, 0);
+        const listContainer = document.getElementById('checkout-items-list');
+        listContainer.innerHTML = ''; // Clear list
+        
+        cart.forEach((item, index) => {
+            const itemElement = document.createElement('div');
+            itemElement.className = 'checkout-item flex justify-between items-start text-sm md:text-base';
+            
+            // Smoothie name and details
+            const nameDiv = document.createElement('div');
+            nameDiv.className = 'flex-1 pr-2';
+            // Use the detailed formatter but remove the leading number for cleaner display
+            const detailText = formatSmoothieName(item).replace(item.name[lang], '').trim().slice(1, -1); 
+            nameDiv.innerHTML = `<strong>${index + 1}. ${item.name[lang]}</strong><br><span class="text-xs text-gray-500">${detailText}</span>`;
+            
+            // Price
+            const priceSpan = document.createElement('span');
+            priceSpan.className = 'font-semibold text-right';
+            priceSpan.textContent = `$${item.finalPrice.toFixed(2)}`;
+            
+            itemElement.appendChild(nameDiv);
+            itemElement.appendChild(priceSpan);
+            listContainer.appendChild(itemElement);
+        });
+
+        document.getElementById('checkout-total-price').textContent = `$${total.toFixed(2)}`;
+        document.getElementById('checkout-summary-modal').style.display = 'flex';
+        updateUI(); // Ensure checkout modal texts are in the correct language
+    };
+    
+    document.getElementById('checkout-btn').addEventListener('click', renderCheckoutModal);
+    
+    document.getElementById('confirm-checkout-btn').addEventListener('click', () => {
+        closeModal('checkout-summary-modal');
+        showMessage(T('checkout_success_title'), T('checkout_success'));
+
+        // Empty cart after purchase
+        cart = [];
+        updateCartDisplay();
+    });
+
+    // Initialization on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        // 1. Get all unique ingredients once
+        allIngredients = getAllUniqueIngredients();
+
+        // 2. Initial UI Render (will render explorer too)
+        updateUI(); 
+    });
+</script>
+
+</body>
+</html>
