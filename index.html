@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smoothie Shop 🛒</title>
-    <!-- Incluir Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Incluir Tailwind CSS para facilitar el diseño general y la estética -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* --- ESTILOS GENERALES Y TIPOGRAFÍA (CYBER-TECH DARK MODE) --- */
@@ -349,41 +347,33 @@
         <p id="header-subtitle" class="text-gray-400">Your daily dose of health and flavor. Choose, customize, and enjoy!</p>
     </header>
 
-    <!-- NUEVA SECCIÓN: EXPLORADOR NUTRICIONAL INTERACTIVO -->
     <section id="ingredient-explorer">
         <h2 id="explorer-title" class="text-3xl font-bold mb-6 border-b-2 pb-2" style="border-bottom-color: var(--secondary-accent); color: var(--secondary-accent); text-shadow: var(--secondary-glow);">Interactive Nutritional Explorer</h2>
         
         <div class="grid md:grid-cols-2 gap-6">
-            <!-- Columna 1: Lista de Ingredientes -->
             <div>
                 <p id="explorer-instructions" class="text-sm mb-4 text-gray-400">Click on any ingredient below to view its bio-profile and health impact data.</p>
                 <div id="ingredient-list" class="max-h-96 overflow-y-auto pr-2">
-                    <!-- Ingredients will be rendered here -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Columna 2: Panel de Datos (Inicialmente Placeholder) -->
             <div id="data-panel" class="data-panel-card p-6 min-h-full">
                 <h3 id="panel-title" class="text-xl font-extrabold mb-3" style="color: var(--primary-accent);">Select an Ingredient</h3>
                 <p id="panel-description" class="text-gray-400 mb-6">Access the simulated bio-profile for detailed nutritional metrics and impact assessment.</p>
                 
                 <div id="panel-content">
                     <div class="space-y-4">
-                        <!-- Las barras de datos se renderizarán aquí -->
-                    </div>
+                        </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN DE PRODUCTOS EXISTENTE -->
     <h2 id="products-section-title" class="text-3xl font-bold mb-6 border-b-2 pb-2" style="border-bottom-color: var(--primary-accent); color: var(--primary-accent); text-shadow: var(--primary-glow);">Smoothie Offerings</h2>
     <div id="products-grid" class="grid gap-6 md:gap-8 lg:grid-cols-4 sm:grid-cols-2">
-        <!-- Product cards will be rendered here -->
-    </div>
+        </div>
 </div>
 
-<!-- Floating Cart Widget (Always visible) -->
 <div class="cart-float" id="cart-float-widget">
     <div class="cart-info flex items-center">
         <i class="fas fa-shopping-basket fa-lg mr-3" style="color: var(--secondary-accent); text-shadow: var(--secondary-glow);"></i>
@@ -396,48 +386,39 @@
     </button>
 </div>
 
-<!-- CUSTOMIZATION MODAL (Remains the same) -->
 <div id="customization-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn text-gray-400 hover:text-red-500 cursor-pointer absolute top-4 right-6 text-3xl font-bold transition">&times;</span>
         <h3 id="modal-title" class="text-2xl font-bold mb-4 border-b-2 pb-2" style="border-bottom-color: var(--primary-accent); color: var(--primary-accent); text-shadow: 0 0 5px var(--primary-accent);">Customize Smoothie</h3>
         
         <form id="customization-form">
-            <!-- Hidden base ingredient inputs -->
             <input type="hidden" id="modal-smoothie-id" value="">
             <input type="hidden" id="modal-smoothie-name" value="">
             <input type="hidden" id="modal-smoothie-price" value="">
             <input type="hidden" id="modal-smoothie-is-custom" value="false">
 
-            <!-- Price Update Display -->
             <div class="flex justify-between items-center p-3 rounded-lg mb-4" style="background-color: #2F2F3B; border: 1px solid var(--primary-accent);">
                 <span class="text-sm font-semibold text-gray-300">Current Price:</span>
                 <span id="current-custom-price" class="text-2xl font-extrabold" style="color: var(--secondary-accent); text-shadow: var(--secondary-glow);">$0.00</span>
             </div>
 
-            <!-- Container for fruit selection (BYO ONLY) -->
             <div id="fruit-selector-group" style="display: none;">
                 <label id="label-fruits-byo" class="block mt-4 font-semibold" style="color: var(--primary-accent);">Choose 4 Fruits for your Base (Required):</label>
                 <div class="option-group flex flex-wrap gap-2 mt-2" id="fruit-options">
-                    <!-- Fruits will load dynamically -->
-                </div>
+                    </div>
                 <p id="fruit-validation-message" class="text-red-400 text-sm mt-1" style="display: none;"></p>
             </div>
 
-            <!-- Boosters (Common to both) -->
             <div id="booster-group">
                 <label id="label-boosters" class="block mt-4 font-semibold" style="color: var(--primary-accent);">Add Boosters (Max 2, Extra Charge):</label>
                 <div class="option-group flex flex-wrap gap-2 mt-2" id="booster-options">
-                    <!-- Boosters will load dynamically -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Remove Ingredients (PRE-BUILT ONLY) -->
             <div id="remove-options-group">
                 <label id="label-remove" class="block mt-4 font-semibold" style="color: var(--primary-accent);">Remove Ingredients (Allergies or Aversions):</label>
                 <div class="option-group flex flex-wrap gap-2 mt-2" id="remove-options">
-                    <!-- Smoothie ingredients will load dynamically -->
-                </div>
+                    </div>
             </div>
             
             <button type="submit" class="add-btn mt-6 flex items-center justify-center">
@@ -448,15 +429,13 @@
     </div>
 </div>
 
-<!-- CHECKOUT MODAL (Replaces alert for order summary) -->
 <div id="checkout-summary-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn text-gray-400 hover:text-red-500 cursor-pointer absolute top-4 right-6 text-3xl font-bold transition">&times;</span>
         <h3 id="checkout-modal-title" class="text-2xl font-bold mb-4 border-b-2 pb-2" style="border-bottom-color: var(--primary-accent); color: var(--primary-accent); text-shadow: 0 0 5px var(--primary-accent);">Order Summary</h3>
         
         <div id="checkout-items-list" class="max-h-80 overflow-y-auto mb-4 pr-2">
-            <!-- Cart items will be rendered here -->
-        </div>
+            </div>
         
         <div class="flex justify-between items-center checkout-total">
             <span id="checkout-total-label">TOTAL TO PAY:</span>
@@ -470,7 +449,6 @@
     </div>
 </div>
 
-<!-- GENERIC MESSAGE MODAL (Replaces simple alerts) -->
 <div id="message-modal" class="modal">
     <div class="modal-content">
         <span class="close-btn text-gray-400 hover:text-red-500 cursor-pointer absolute top-4 right-6 text-3xl font-bold transition">&times;</span>
@@ -542,7 +520,7 @@
             energy: 'Energía',
             immunity: 'Inmunidad',
             recovery: 'Recuperación',
-            digestion: 'Digestión',
+            digestion: 'Digestión', // FIXED: Key added
             metrics_description: (name) => `Análisis simulado de impacto en la salud para ${name}.`,
         },
         en: {
@@ -579,15 +557,15 @@
             energy: 'Energy',
             immunity: 'Immunity',
             recovery: 'Recovery',
-            digestion: 'Digestion',
+            digestion: 'Digestion', // FIXED: Key added
             metrics_description: (name) => `Simulated health impact analysis for ${name}.`,
         }
     };
     
     // Helper function for translation
-    function T(key, lang = currentLanguage) {
+    function T(key, lang = currentLanguage, arg = null) {
         const value = translations[lang][key];
-        return typeof value === 'function' ? value(arguments[2]) : value; // Handle functions with argument
+        return typeof value === 'function' ? value(arg) : value; // Handle functions with argument
     }
 
 
@@ -787,7 +765,7 @@
             { key: 'energy', label: T('energy'), value: ingredient.data.energy },
             { key: 'immunity', label: T('immunity'), value: ingredient.data.immunity },
             { key: 'recovery', label: T('recovery'), value: ingredient.data.recovery },
-            { key: 'digestion', label: 'Digestion', value: ingredient.data.digestion }
+            { key: 'digestion', label: T('digestion'), value: ingredient.data.digestion } // FIXED: Use T('digestion')
         ];
 
         let contentHtml = '<div class="space-y-4">';
@@ -887,7 +865,8 @@
 
         // 1. Update hidden modal data
         document.getElementById('modal-smoothie-id').value = product.id;
-        document.getElementById('modal-smoothie-name').value = product.name[lang];
+        // Use the product's name object to store, not the translated name itself
+        document.getElementById('modal-smoothie-name').value = product.name[lang]; 
         document.getElementById('modal-smoothie-price').value = product.price;
         document.getElementById('modal-smoothie-is-custom').value = isCustom; 
         
@@ -930,7 +909,7 @@
             document.getElementById('label-remove').textContent = T('label_remove');
         }
         
-        // 3. BOOSTERS (Common to both)
+        // 3. BOOSTERS (Common to both) - FIXED: This section now updates on language change
         const boosterOptions = document.getElementById('booster-options');
         boosterOptions.innerHTML = BOOSTERS.map(b => 
             `<div class="option-chip" data-type="booster" data-name-es="${b.name.es}" data-name-en="${b.name.en}" data-price="${b.price.toFixed(2)}">
@@ -1121,6 +1100,17 @@
             renderIngredientExplorer(allIngredients);
         }
         
+        // **FIXED: Update the selected ingredient data panel if one is selected**
+        const selectedIngChip = document.querySelector('.ingredient-list-item.selected-ing');
+        if (selectedIngChip) {
+            const nameEs = selectedIngChip.dataset.nameEs;
+            const all = [...FRUIT_OPTIONS, ...BOOSTERS, ...OTHER_INGREDIENTS];
+            const dataObject = all.find(item => item.name.es === nameEs);
+            if (dataObject) {
+                renderDataPanel(dataObject);
+            }
+        }
+        
         // 3. Cart
         document.getElementById('checkout-btn').querySelector('span').textContent = T('checkout_btn');
         updateCartDisplay(); 
@@ -1128,11 +1118,15 @@
         // 4. Products
         renderProducts();
         
-        // 5. If the customization modal is open, close it and reopen it to update texts
+        // 5. If the customization modal is open, close it and reopen it to update texts (FIXED: Added setTimeout)
         if (document.getElementById('customization-modal').style.display === 'flex') {
             const currentId = document.getElementById('modal-smoothie-id').value;
             closeModal('customization-modal');
-            if (currentId) openCustomizationModal(currentId);
+            
+            // Reopen after a brief delay to ensure closure is complete
+            setTimeout(() => {
+                if (currentId) openCustomizationModal(currentId);
+            }, 0); 
         }
         
         // 6. Update texts in the checkout modal (if open)
