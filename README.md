@@ -1,4 +1,3 @@
-```markdown
 # 🥤 Smoothie Central | Interfaz de Pedidos con Explorador Nutricional
 
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/es/docs/Web/HTML)
@@ -54,7 +53,7 @@ Este proyecto fue construido utilizando herramientas estándar y modernas de des
 
 ## 🚀 Instalación y Uso
 
-Dado que el proyecto está contenido completamente en un único archivo HTML (`fritas.html`), su uso es extremadamente sencillo.
+Dado que el proyecto está contenido completamente en un único archivo HTML, su uso es extremadamente sencillo.
 
 1.  **Descargar el archivo:** Obtenga el archivo HTML.
 2.  **Abrir el archivo:** Simplemente haga doble clic en el archivo HTML para abrirlo en su navegador.
@@ -75,4 +74,3 @@ El código JavaScript sigue una estructura modular dentro del `<script>` del HTM
 5.  **Gestión de Modales:** Funciones para abrir/cerrar modales y manejar la selección de opciones (chips).
 6.  **Actualización de la UI (`updateUI()`):** Función central que se ejecuta en la carga y en cada cambio de idioma para re-renderizar todas las partes dinámicas.
 7.  **Inicialización:** Detección de `DOMContentLoaded` para la configuración inicial.
-```
