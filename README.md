@@ -1,7 +1,3 @@
-🥤 Smoothie Central | Ordering Interface with Nutritional Explorer 
-Here is the complete professional README for your project, provided in a single Markdown code block as requested, with all content translated to English.
-
-Markdown
 
 # 🥤 Smoothie Central | Ordering Interface with Nutritional Explorer
 
