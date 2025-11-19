@@ -56,7 +56,7 @@ This project was built using standard, modern web development tools for a pure f
 
 Since the project is contained entirely within a single HTML file, usage is extremely simple.
 
-1.  **Download the file:** Obtain the HTML file (e.g., `fritas.html`).
+1.  **Download the file:** Obtain the HTML file (e.g., `frutas.html`).
 2.  **Open the file:** Simply double-click the HTML file to open it in your browser.
 3.  **Nutritional Explorer:** Use the top section to click on ingredients and view their simulated profiles.
 4.  **Ordering:** Click the "Add and Customize" button on any smoothie to modify its recipe before adding it to the cart.
