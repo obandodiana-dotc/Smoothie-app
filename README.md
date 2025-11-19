@@ -75,3 +75,26 @@ The JavaScript code follows a modular structure within the HTML `<script>` tag f
 5.  **Modal Management:** Functions to open/close modals and handle option selection (chips).
 6.  **UI Update (`updateUI()`):** The central function executed on load and every language change to re-render all dynamic parts.
 7.  **Initialization:** `DOMContentLoaded` detection for initial setup.
+
+---
+
+## 🔄 Syncing Your Latest Changes to GitHub
+
+If you update the HTML locally and do not see the changes reflected on GitHub, follow these steps to publish the latest version:
+
+1. **Verify the branch:** Make sure you are on the correct branch (for this repository, `work` is used).  
+   ```bash
+   git status -sb
+   ```
+2. **Stage and commit your edits:** Add the modified files and create a descriptive commit message.  
+   ```bash
+   git add index.html README.md
+   git commit -m "Describe your update"
+   ```
+3. **Push to GitHub:** Send the commit to the remote repository.  
+   ```bash
+   git push origin work
+   ```
+4. **Confirm on GitHub:** Refresh the repository page or GitHub Pages site to verify the update is live.
+
+> Tip: If Git reports that your local branch is behind, run `git pull --rebase origin work` before pushing to incorporate any remote updates.
